@@ -80,7 +80,7 @@ pair<int, int> alg1_Prob( int* vecX, int* vecY, int n, int* bestAns, const int P
 			current_pair = make_pair(i-1, j);
 			cost_sum = vecX[i-1] + vecY[j];
 
-			if ( f( resultMtx, current_pair.first, current_pair.second ) && cost_sum < best ) {
+			if ( f_prob( PROB ) && cost_sum < best ) {
 				best = cost_sum;
 				best_pair = current_pair;
 			}
@@ -88,7 +88,7 @@ pair<int, int> alg1_Prob( int* vecX, int* vecY, int n, int* bestAns, const int P
 			current_pair = make_pair(j, i-1);
 			cost_sum = vecX[j] + vecY[i-1];
 
-			if ( f( resultMtx, current_pair.first, current_pair.second ) && cost_sum < best ) {
+			if ( f_prob( PROB ) && cost_sum < best ) {
 				best = cost_sum;
 				best_pair = current_pair;
 			}
@@ -97,7 +97,7 @@ pair<int, int> alg1_Prob( int* vecX, int* vecY, int n, int* bestAns, const int P
 		current_pair = make_pair(i, i);
 		cost_sum = vecX[i] + vecY[i];
 
-		if ( f(resultMtx, current_pair.first, current_pair.second ) && cost_sum < best ) {
+		if ( f_prob( PROB ) && cost_sum < best ) {
 			best = cost_sum;
 			best_pair = current_pair;
 		}
