@@ -40,16 +40,48 @@ pair<int, int> alg2( int* vecX, int* vecY, bool** resultMtx, int n ) {
 	return best_pair;
 }
 
-int main() {
+pair<int, int> alg2( int* vecX, int* vecY, int n, const int PROB ) {
 
-	Data data = new_data();
+	int i = 0, j;
+	int best = INF;
+	pair<int,int> best_pair = make_pair(-1,-1);
+	vector<int> contourline(n);
 
-   	pair< int, int > res = alg2	( getVecX(data),
-								  getVecY(data),
-								  getCompatibilityMtx(data),
-								  getSize(data) );
+	for ( j = 0; j < n; j++ )
+		contourline[j] = 1;
 
-   	cout << "x: " << res.first << " y: " << res.second << endl;
+	while ( i < n && best == INF ) {
 
-	return 0;
+		for ( j = 0; j < n; j++ ) {
+
+			int sum = vecX[j] + vecY[contourline[j]];
+
+			while ( contourline[j] < n && sum <= (vecX[i] + vecY[i]) ) {
+				if ( f_prob( PROB ) == 1 && sum < best ) {
+					best = sum;
+					best_pair = make_pair(j, contourline[j]);
+				}
+
+				contourline[j]++;
+			}
+		}
+
+		i++;
+	}
+
+	return best_pair;
 }
+
+// int main() {
+//
+// 	Data data = new_data();
+//
+//    	pair< int, int > res = alg2	( getVecX(data),
+// 								  getVecY(data),
+// 								  getCompatibilityMtx(data),
+// 								  getSize(data) );
+//
+//    	cout << "x: " << res.first << " y: " << res.second << endl;
+//
+// 	return 0;
+// }

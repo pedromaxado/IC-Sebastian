@@ -33,16 +33,42 @@ pair<int, int> AlmostTrivialAlg( int* vecX, int* vecY, bool** resultMtx, int n )
 	return best_pair;
 }
 
-int main() {
+pair<int, int> AlmostTrivialAlg_Prob( int* vecX, int* vecY, int n, const int PROB ) {
 
-	Data data = new_data();
+	if ( f_prob( PROB ) )
+		return make_pair(0,0);
 
-   	pair< int, int > res = AlmostTrivialAlg	( getVecX(data),
-											  getVecY(data),
-											  getCompatibilityMtx(data),
-											  getSize(data) );
+	int ln = 0, col = 0, maxCol = n;
+	int best = INF;
+	pair<int, int> best_pair;
 
-   	cout << "x: " << res.first << " y: " << res.second << endl;
+	while ( ln < n && maxCol > 0 ) {
 
-	return 0;
+		for ( col = 0; col < maxCol; col++ ) {
+			if ( f_prob( PROB ) ) {
+				best = vecX[ln] + vecY[col];
+				best_pair = make_pair(ln, col);
+
+				maxCol = col;
+			}
+		}
+
+		ln++;
+	}
+
+	return best_pair;
 }
+
+// int main() {
+//
+// 	Data data = new_data();
+//
+//    	pair< int, int > res = AlmostTrivialAlg	( getVecX(data),
+// 											  getVecY(data),
+// 											  getCompatibilityMtx(data),
+// 											  getSize(data) );
+//
+//    	cout << "x: " << res.first << " y: " << res.second << endl;
+//
+// 	return 0;
+// }

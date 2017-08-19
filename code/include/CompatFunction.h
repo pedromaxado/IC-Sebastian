@@ -3,4 +3,6 @@
 
 bool f( bool** resultMtx, int ln, int col );
 
+bool f_prob( const int PROB );
+
 #endif
