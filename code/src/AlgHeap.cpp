@@ -1,8 +1,7 @@
-#include <bits/stdc++.h>
 #include "../include/CompatFunction.h"
+#include "../include/Data.h"
 #include "../include/Heap.h"
 #include "../include/AlgHeap.h"
-#include "../include/Data.h"
 
 using namespace std;
 

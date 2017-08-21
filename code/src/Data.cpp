@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cstdlib>
 #include "../include/Data.h"
 
 struct data_t {
@@ -14,7 +15,7 @@ void readData( Data data ) {
 
 	FILE* fp;
 
-	if ( !( fp = fopen("../../instancias/15.txt", "r") ) ) {
+	if ( !( fp = fopen("instancias/15.txt", "r") ) ) {
         printf("Erro na abertura do arquivo.\n");
         exit( EXIT_FAILURE );
     }

@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <vector>
+#include <limits>
 #include "../include/CompatFunction.h"
 #include "../include/Alg2.h"
 #include "../include/Data.h"
