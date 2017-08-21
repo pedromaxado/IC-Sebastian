@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include "../include/CompatFunction.h"
 
 bool f( bool** resultMtx, int ln, int col ) {
