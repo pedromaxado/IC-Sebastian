@@ -9,7 +9,7 @@ typedef struct pair_t {
 
 typedef struct heap_t* Heap;
 
-Heap new_heap();
+Heap new_heap( int size );
 
 void destroy_heap( Heap h );
 
