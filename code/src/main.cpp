@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+
 #include "../include/Data.h"
 #include "../include/Heap.h"
 #include "../include/Alg1.h"
@@ -11,6 +13,9 @@
 #define PROB 10
 #define REP 30
 
+const string DATA_PATH = "../data/";
+const string INST_PATH = "../instances/";
+
 using namespace std;
 
 double getElapsedTime( clock_t init, clock_t end ) {
@@ -19,18 +24,35 @@ double getElapsedTime( clock_t init, clock_t end ) {
 
 int main( int argc, char const *argv[] ) {
 
-    FILE* fp;
+    ofstream    fp_all_stats,
+                fp_alg1_stats,
+                fp_alg2_stats,
+                fp_algT_stats,
+                fp_algQT_stats,
+                fp_algHeap_stats;
+
+    ifstream    fp_current_inst_path;
+
     clock_t start, end;
     double sumTriv, sumATriv, sumAlg1, sumAlg2;
 
-    fp = fopen("../data/stats.dat", "w");
+    string  current_inst_path;
 
-    if ( fp == NULL ) {
-        printf("Erro na abertura de arquivo\n");
-        exit(EXIT_FAILURE);
-    }
+    string  all_stats,
+            alg1_stats,
+            alg2_stats,
+            algT_stats,
+            algQT_stats,
+            algHeap_stats;
 
-    pair<int,int> res;
+    all_stats     = DATA_PATH + "all_stats.dat";
+    alg1_stats    = DATA_PATH + "alg1_stats.txt";
+    alg2_stats    = DATA_PATH + "alg2_stats.txt";
+    algT_stats    = DATA_PATH + "algT_stats.txt";
+    algQT_stats   = DATA_PATH + "algQT_stats.txt";
+    algHeap_stats = DATA_PATH + "algHeap_stats.txt";
+
+
 
     for ( int n = 10; n <= MAXN; n *= 10 ) {
         sumTriv = sumATriv = sumAlg1 = sumAlg2 = 0;
