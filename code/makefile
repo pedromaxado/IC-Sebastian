@@ -6,7 +6,7 @@ RM = rm -f
 
 VPATH = src
 
-OBJS = Data.o CompatFunction.o Alg1.o Alg2.o AlgQT.o AlgT.o main.o
+OBJS = Data.o Heap.o CompatFunction.o Alg1.o Alg2.o AlgQT.o AlgT.o AlgHeap.o main.o
 
 MAIN = main
 
