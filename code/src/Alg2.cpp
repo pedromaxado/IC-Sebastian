@@ -41,7 +41,7 @@ pair<int, int> alg2( int* vecX, int* vecY, bool** resultMtx, int n ) {
 	return best_pair;
 }
 
-pair<int, int> alg2( int* vecX, int* vecY, int n, const int PROB ) {
+pair<int, int> alg2_Prob( int* vecX, int* vecY, int n, const int PROB ) {
 
 	int i = 0, j;
 	int best = INF;

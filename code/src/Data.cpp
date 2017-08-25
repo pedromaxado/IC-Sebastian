@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cstdlib>
+#include "../include/FileHandler.h"
 #include "../include/Data.h"
+
+using namespace std;
 
 struct data_t {
 	int 	n;
@@ -9,16 +12,9 @@ struct data_t {
 	bool** 	compatibilityMtx;
 };
 
-void readData( Data data ) {
+void readData( Data data, FILE* fp ) {
 
 	int i, j;
-
-	FILE* fp;
-
-	if ( !( fp = fopen("instancias/15.txt", "r") ) ) {
-        printf("Erro na abertura do arquivo.\n");
-        exit( EXIT_FAILURE );
-    }
 
     fscanf(fp, "%d", &data->n);
 
@@ -48,11 +44,15 @@ void readData( Data data ) {
 	fclose(fp);
 }
 
-Data new_data() {
+Data new_data( string path ) {
+
+	FILE *fp = open_file( path.c_str(), "r" );
 
     Data data = ( Data ) malloc( sizeof(struct data_t) );
 
-    readData(data);
+    readData(data, fp);
+
+	close_file(fp);
 
     return data;
 }
