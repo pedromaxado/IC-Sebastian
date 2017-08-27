@@ -1,6 +1,6 @@
 CC = g++
 
-CFLAGS =
+CFLAGS = -g -Wall -Wextra -Werror -pedantic
 
 RM = rm -f
 
