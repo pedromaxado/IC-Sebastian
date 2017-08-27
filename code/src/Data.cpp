@@ -22,8 +22,10 @@ void readData( Data data, string path ) {
 
 	fp_inst.open( path, ifstream::in );
 
-	if ( fp_inst.fail() )
+	if ( fp_inst.fail() ) {
+		cout << "sminufb" <<endl;
 		exit(EXIT_FAILURE);
+	}
 
 	fp_inst >> data->n;
 

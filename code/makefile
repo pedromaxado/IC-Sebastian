@@ -1,27 +1,30 @@
-CC = g++
+SrcDir = src
+IncDir = include
+BinDir = .
 
-CFLAGS = -g -Wall -Wextra -Werror -pedantic
+OutputFileName   = main
+OutputFile       = $(BinDir)/$(OutputFileName)
+CompilationUnits = $(shell find $(SrcDir) -name '*.cpp')
 
-RM = rm -f
+Build    = g++
+Standard = c++11
+Warnings = -g -Wall
+Optimize = -flto -O2
 
-VPATH = src
+BuildFlags  = $(Warnings)       \
+              -std=$(Standard)  \
+              $(Optimize)       \
+              -I $(IncDir)      \
+              -o $(OutputFile)
 
-OBJS = FileHandler.o Data.o Heap.o CompatFunction.o Alg1.o Alg2.o AlgQT.o AlgT.o AlgHeap.o main.o
 
-MAIN = main
+directories: $(SrcDir)
+	@[ -d "$(BinDir)" ] || mkdir "$(BinDir)";
 
-$(MAIN): $(OBJS)
-	@echo ""
-	@echo " --- COMPILANDO PROGRAMA ---"
-	@$(CC) $(CFLAGS) $(OBJS) -o $(MAIN)
-	@echo ""
 
-%.o: %.c %.h
-	@echo " --- COMPILANDO OBJETO \"$@\""
-	@$(CC) $(CFLAGS) $< -c
+build: directories
+	@$(Build) $(BuildFlags) $(CompilationUnits)
+
 
 clean:
-	$(RM) *.o *.gch
-
-run: $(MAIN)
-	./$(MAIN)
+	rm -f $(OutputFile)

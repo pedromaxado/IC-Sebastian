@@ -11,7 +11,6 @@
 #include "../include/AlgHeap.h"
 
 #define MAXN 100
-#define PROB 10
 #define REP  50
 
 const string DATA_PATH = "./data/stats_";
@@ -19,20 +18,14 @@ const string INST_PATH = "./instances/";
 
 using namespace std;
 
-void print_state (const std::ios& stream) {
-  std::cout << " good()=" << stream.good() << endl;
-  std::cout << " eof()=" << stream.eof() << endl;
-  std::cout << " fail()=" << stream.fail() << endl;
-  std::cout << " bad()=" << stream.bad() << endl;
-}
-
 double getElapsedTime( clock_t start, clock_t end ) {
     return (double) (end-start)*1000/CLOCKS_PER_SEC;
 }
 
-int main( int argc, char const *argv[] ) {
+int main() {
 
-    int i, j;
+    double exec_time;
+    int n, r, prob;
 
     clock_t start, end;
 
@@ -44,22 +37,66 @@ int main( int argc, char const *argv[] ) {
 
     string  inst_fpath;
 
-    fp_stats_diagonal.open( DATA_PATH + "diagonal.txt", std::ofstream::out | std::ofstream::app );
-    fp_stats_contourl.open( DATA_PATH + "contourl.txt", std::ofstream::out | std::ofstream::app );
-    fp_stats_atrivial.open( DATA_PATH + "atrivial.txt", std::ofstream::out | std::ofstream::app );
-    fp_stats_trivial .open( DATA_PATH + "trivial.txt" , std::ofstream::out | std::ofstream::app );
-    fp_stats_heap    .open( DATA_PATH + "heap.txt"    , std::ofstream::out | std::ofstream::app );
+    fp_stats_diagonal.open( DATA_PATH + "diagonal.csv", std::ofstream::out | std::ofstream::app );
+    fp_stats_contourl.open( DATA_PATH + "contourl.csv", std::ofstream::out | std::ofstream::app );
+    fp_stats_atrivial.open( DATA_PATH + "atrivial.csv", std::ofstream::out | std::ofstream::app );
+    fp_stats_trivial .open( DATA_PATH + "trivial.csv" , std::ofstream::out | std::ofstream::app );
+    fp_stats_heap    .open( DATA_PATH + "heap.csv"    , std::ofstream::out | std::ofstream::app );
 
-    for ( i = 10; i <= MAXN; i *= 10 ) {
-        inst_fpath = INST_PATH + to_string(i) + ".txt";
+    for ( prob = 10; prob >= 10; prob /= 10 ) {
 
-        Data data = new_data( inst_fpath, PROB_MOD );
+        fp_stats_diagonal << "P = " << prob << endl;
+        fp_stats_contourl << "P = " << prob << endl;
+        fp_stats_atrivial << "P = " << prob << endl;
+        fp_stats_trivial  << "P = " << prob << endl;
 
-        for ( j = 0; j < REP; j++ ) {
-            
+        for ( n = 10; n <= MAXN; n *= 10 ) {
+            inst_fpath = INST_PATH + to_string(n) + ".txt";
+
+            Data data = new_data( inst_fpath, PROB_MOD );
+
+            start = clock();
+            for ( r = 0; r < REP; r++ ) {
+                TrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
+            }
+            end = clock();
+
+            exec_time = getElapsedTime( start, end ) / REP;
+
+            fp_stats_trivial << n << "," << exec_time << endl;
+
+            start = clock();
+            for ( r = 0; r < REP; r++ ) {
+                AlmostTrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
+            }
+            end = clock();
+
+            exec_time = getElapsedTime( start, end ) / REP;
+
+            fp_stats_atrivial << n << "," << exec_time << endl;
+
+            start = clock();
+            for ( r = 0; r < REP; r++ ) {
+                Alg1_Prob( getVecX(data), getVecY(data), getSize(data), prob );
+            }
+            end = clock();
+
+            exec_time = getElapsedTime( start, end ) / REP;
+
+            fp_stats_diagonal << n << "," << exec_time << endl;
+
+            start = clock();
+            for ( r = 0; r < REP; r++ ) {
+                Alg2_Prob( getVecX(data), getVecY(data), getSize(data), prob );
+            }
+            end = clock();
+
+            exec_time = getElapsedTime( start, end ) / REP;
+
+            fp_stats_contourl << n << "," << exec_time << endl;
+
+            destroy_data( data );
         }
-
-        destroy_data( data );
     }
 
     fp_stats_diagonal.close();

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-pair<int, int> alg1( int* vecX, int* vecY, bool** resultMtx, int n ) {
+pair<int, int> Alg1( int* vecX, int* vecY, bool** resultMtx, int n ) {
 
 	if ( f( resultMtx, 0, 0 ) )
 		return make_pair(0,0);
@@ -57,7 +57,7 @@ pair<int, int> alg1( int* vecX, int* vecY, bool** resultMtx, int n ) {
         return make_pair(-1,-1);
 }
 
-pair<int, int> alg1_Prob( int* vecX, int* vecY, int n, const int PROB ) {
+pair<int, int> Alg1_Prob( int* vecX, int* vecY, int n, const int PROB ) {
 
 	if ( f_prob( PROB ) )
 		return make_pair(0,0);
