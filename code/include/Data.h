@@ -3,11 +3,14 @@
 
 #include <iostream>
 
+#define PROB_MOD 1
+#define MTX_MOD  0
+
 using namespace std;
 
 typedef struct data_t* Data;
 
-Data new_data( string path );
+Data new_data( string path, int mode );
 
 void destroy_data( Data d );
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include "../include/FileHandler.h"
 #include "../include/Data.h"
@@ -10,49 +11,58 @@ struct data_t {
 	int* 	vecX;
 	int* 	vecY;
 	bool** 	compatibilityMtx;
+
+	int mode;
 };
 
-void readData( Data data, FILE* fp ) {
+void readData( Data data, string path ) {
 
-	int i, j;
+	ifstream fp_inst;
+	int i;
 
-    fscanf(fp, "%d", &data->n);
+	fp_inst.open( path, ifstream::in );
+
+	if ( fp_inst.fail() )
+		exit(EXIT_FAILURE);
+
+	fp_inst >> data->n;
 
     data->vecX = ( int* ) malloc( data->n * sizeof(int) );
     data->vecY = ( int* ) malloc( data->n * sizeof(int) );
 
-    data->compatibilityMtx = ( bool** ) malloc( data->n * sizeof( bool* ) );
+    for ( i = 0; i < data->n; i++ )
+		fp_inst >> data->vecX[i];
 
     for ( i = 0; i < data->n; i++ )
-    	data->compatibilityMtx[i] = ( bool* ) malloc( data->n * sizeof( bool ) );
+   		fp_inst >> data->vecY[i];
 
-    for ( i = 0; i < data->n; i++ )
-   		fscanf(fp, "%d", &data->vecX[i]);
+	if ( data->mode == MTX_MOD ) {
+		int j;
 
-    for ( i = 0; i < data->n; i++ )
-   		fscanf(fp, "%d", &data->vecY[i]);
+		data->compatibilityMtx = ( bool** ) malloc( data->n * sizeof( bool* ) );
 
-    int aux;
+	    for ( i = 0; i < data->n; i++ )
+	    	data->compatibilityMtx[i] = ( bool* ) malloc( data->n * sizeof( bool ) );
 
-   	for ( i = 0; i < data->n; i++ ) {
-        for ( j = 0; j < data->n; j++ ) {
-            fscanf(fp, "%d", &aux);
-            data->compatibilityMtx[i][j] = aux;
-        }
-    }
+	    int aux;
 
-	fclose(fp);
+	   	for ( i = 0; i < data->n; i++ ) {
+	        for ( j = 0; j < data->n; j++ ) {
+	            fp_inst >> aux;
+	            data->compatibilityMtx[i][j] = aux;
+	        }
+	    }
+	}
+
+	fp_inst.close();
 }
 
-Data new_data( string path ) {
-
-	FILE *fp = open_file( path.c_str(), "r" );
+Data new_data( string path, int mode ) {
 
     Data data = ( Data ) malloc( sizeof(struct data_t) );
 
-    readData(data, fp);
-
-	close_file(fp);
+	data->mode = mode;
+    readData( data, path );
 
     return data;
 }
@@ -62,11 +72,14 @@ void destroy_data( Data data ) {
     free(data->vecX);
     free(data->vecY);
 
-    for ( int i = 0; i < data->n; i++ ) {
-        free(data->compatibilityMtx[i]);
-    }
+	if ( data->mode == MTX_MOD ) {
+		for ( int i = 0; i < data->n; i++ ) {
+			free(data->compatibilityMtx[i]);
+		}
 
-    free(data->compatibilityMtx);
+		free(data->compatibilityMtx);
+	}
+
     free(data);
 }
 

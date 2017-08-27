@@ -17,7 +17,7 @@ pair<int, int> alg2( int* vecX, int* vecY, bool** resultMtx, int n ) {
 	vector<int> contourline(n);
 
 	for ( j = 0; j < n; j++ )
-		contourline[j] = 1;
+		contourline[j] = 0;
 
 	while ( i < n && best == INF ) {
 
