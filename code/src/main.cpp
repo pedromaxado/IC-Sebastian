@@ -10,8 +10,9 @@
 #include "../include/AlgQT.h"
 #include "../include/AlgHeap.h"
 
-#define MAXN 100
-#define REP  50
+#define MINPROB 10000
+#define MAXN    10
+#define REP     50
 
 const string DATA_PATH = "./data/stats_";
 const string INST_PATH = "./instances/";
@@ -43,7 +44,7 @@ int main() {
     fp_stats_trivial .open( DATA_PATH + "trivial.csv" , std::ofstream::out | std::ofstream::app );
     fp_stats_heap    .open( DATA_PATH + "heap.csv"    , std::ofstream::out | std::ofstream::app );
 
-    for ( prob = 10; prob >= 10; prob /= 10 ) {
+    for ( prob = 10; prob <= MINPROB; prob *= 10 ) {
 
         fp_stats_diagonal << "P = " << prob << endl;
         fp_stats_contourl << "P = " << prob << endl;
