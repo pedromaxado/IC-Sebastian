@@ -52,6 +52,6 @@ Mkfile.old
 dkms.conf
 
 code/main
-code/instancias
+code/instances
 code/Gerador
 code/data/

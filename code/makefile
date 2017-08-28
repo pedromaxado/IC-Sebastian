@@ -8,7 +8,7 @@ CompilationUnits = $(shell find $(SrcDir) -name '*.cpp')
 
 Build    = g++
 Standard = c++11
-Warnings = -g -Wall
+Warnings = -Wall
 Optimize = -flto -O2
 
 BuildFlags  = $(Warnings)       \
@@ -21,10 +21,8 @@ BuildFlags  = $(Warnings)       \
 directories: $(SrcDir)
 	@[ -d "$(BinDir)" ] || mkdir "$(BinDir)";
 
-
 build: directories
 	@$(Build) $(BuildFlags) $(CompilationUnits)
-
 
 clean:
 	rm -f $(OutputFile)
