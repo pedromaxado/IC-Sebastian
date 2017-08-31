@@ -1,11 +1,9 @@
 // #include "../include/CompatFunction.h"
 // #include "../include/Data.h"
 // #include "../include/Heap.h"
+#include "../include/AlgHeapUtils.h"
 #include "../include/AlgHeap.h"
 
-#define MAX 10000
-
-unsigned int hash[MAX][MAX];
 // using namespace std;
 //
 // pair<int, int> AlgHeap( int n, int* vecX, int* vecY, bool** resultMtx, Heap h, int** hash ) {
@@ -93,17 +91,6 @@ unsigned int hash[MAX][MAX];
 //     return make_pair(-1,-1);
 // }
 
-typedef struct {
-    int sum;
-    int aind;
-    int bind;
-} Pair;
-
-typedef struct {
-    Pair data[2*MAX];
-    int size;
-} heap;
-
 void h_insert (heap* h, Pair p) {
     h->data[h->size]=p;
     int i=h->size;
@@ -142,11 +129,10 @@ void h_extractmin (heap* h) {
     heapify(h,0);
 }
 
-Pair stack[2*MAX];//see later MAX may not be enough
-heap h;
+//see later MAX may not be enough
 
 
-int AlgHeap( int n, int *vecX, int *vecY, bool **mtx, int* mina, int* minb ) {
+int AlgHeap( int n, int *vecX, int *vecY, bool **mtx, int* mina, int* minb, heap h, Pair *stack, unsigned int **hash ) {
     Pair p,q;
     unsigned int stsize;
     p.sum = vecX[0] + vecY[0];
