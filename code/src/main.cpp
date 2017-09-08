@@ -73,8 +73,8 @@ int main() {
             Data data = new_data( inst_fpath, PROB_MOD );
 
             cout << "\t>> Trivial\t\t";
-            start = clock();
             srand(1);
+            start = clock();
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
                 TrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
@@ -86,8 +86,8 @@ int main() {
             fp_stats_trivial << "," << exec_time;
 
             cout << "\t>> Quase Trivial\t";
-            start = clock();
             srand(1);
+            start = clock();
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
                 AlmostTrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
@@ -112,8 +112,8 @@ int main() {
             fp_stats_diagonal << "," << exec_time;
 
             cout << "\t>> Contourline\t\t";
-            start = clock();
             srand(1);
+            start = clock();
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
                 Alg2_Prob( getVecX(data), getVecY(data), getSize(data), prob );
@@ -125,8 +125,8 @@ int main() {
             fp_stats_contourl << "," << exec_time;
 
             cout << "\t>> Heap\t\t\t";
-            start = clock();
             srand(1);
+            start = clock();
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
                 AlgHeap_Prob( getSize(data), getVecX(data), getVecY(data), prob, h, stack, hash );
