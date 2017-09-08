@@ -27,8 +27,14 @@ double getElapsedTime( clock_t start, clock_t end ) {
 
 int main() {
 
-    // unsigned int hash[MAXN][MAXN];
-    // Pair stack[2*MAXN];
+    unsigned int **hash;
+    Pair stack[2*MAXN];
+    heap h;
+
+    hash = (unsigned int**) malloc( MAXN * sizeof(unsigned int*) );
+
+    for ( int i = 0; i < MAXN; i++ )
+        hash[i] = (unsigned int*) malloc ( MAXN * sizeof(int) );
 
     double exec_time;
     int n, r, prob;
@@ -38,8 +44,8 @@ int main() {
     ofstream fp_stats_diagonal,
              fp_stats_contourl,
              fp_stats_atrivial,
-             fp_stats_trivial;
-            //  fp_stats_heap;
+             fp_stats_trivial,
+             fp_stats_heap;
 
     string  inst_fpath;
 
@@ -47,7 +53,7 @@ int main() {
     fp_stats_contourl.open( DATA_PATH + "contourl.csv", std::ofstream::out | std::ofstream::app );
     fp_stats_atrivial.open( DATA_PATH + "atrivial.csv", std::ofstream::out | std::ofstream::app );
     fp_stats_trivial .open( DATA_PATH + "trivial.csv" , std::ofstream::out | std::ofstream::app );
-    // fp_stats_heap    .open( DATA_PATH + "heap.csv"    , std::ofstream::out | std::ofstream::app );
+    fp_stats_heap    .open( DATA_PATH + "heap.csv"    , std::ofstream::out | std::ofstream::app );
 
     for ( prob = MAXPROB; prob <= MINPROB; prob *= 10 ) {
 
@@ -57,6 +63,7 @@ int main() {
         fp_stats_contourl << (double) 1/prob;
         fp_stats_atrivial << (double) 1/prob;
         fp_stats_trivial  << (double) 1/prob;
+        fp_stats_heap     << (double) 1/prob;
 
         for ( n = 10; n <= MAXN; n *= 10 ) {
             cout << "\t> n = " << n << endl;
@@ -67,9 +74,9 @@ int main() {
 
             cout << "\t>> Trivial\t\t";
             start = clock();
+            srand(1);
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
-                srand(1);
                 TrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
@@ -80,9 +87,9 @@ int main() {
 
             cout << "\t>> Quase Trivial\t";
             start = clock();
+            srand(1);
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
-                srand(1);
                 AlmostTrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
@@ -92,10 +99,10 @@ int main() {
             fp_stats_atrivial << "," << exec_time;
 
             cout << "\t>> Diagonal\t\t";
+            srand(1);
             start = clock();
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
-                srand(1);
                 Alg1_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
@@ -106,9 +113,9 @@ int main() {
 
             cout << "\t>> Contourline\t\t";
             start = clock();
+            srand(1);
             for ( r = 0; r < REP; r++ ) {
                 cout << ".";
-                srand(1);
                 Alg2_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
@@ -116,6 +123,19 @@ int main() {
 
             exec_time = getElapsedTime( start, end ) / REP;
             fp_stats_contourl << "," << exec_time;
+
+            cout << "\t>> Heap\t\t\t";
+            start = clock();
+            srand(1);
+            for ( r = 0; r < REP; r++ ) {
+                cout << ".";
+                AlgHeap_Prob( getSize(data), getVecX(data), getVecY(data), prob, h, stack, hash );
+            }
+            end = clock();
+            cout << endl;
+
+            exec_time = getElapsedTime( start, end ) / REP;
+            fp_stats_heap << "," << exec_time;
 
             destroy_data( data );
 
@@ -126,26 +146,32 @@ int main() {
         fp_stats_contourl << endl;
         fp_stats_atrivial << endl;
         fp_stats_trivial  << endl;
-        // fp_stats_heap     << endl;
+        fp_stats_heap     << endl;
     }
 
     fp_stats_diagonal.close();
     fp_stats_contourl.close();
     fp_stats_atrivial.close();
     fp_stats_trivial .close();
-    // fp_stats_heap    .close();
+    fp_stats_heap    .close();
 
-	// Data data = new_data( "./instancias/15.txt", MTX_MOD );
+    for ( int i = 0; i < MAXN; i++ ) {
+        free(hash[i]);
+    }
+
+    free(hash);
+
+	// Data data = new_data( "./instances/15.txt", MTX_MOD );
     //
     // pair< int, int > res;
-    // res = alg1	( getVecX(data),
+    // res = Alg1	( getVecX(data),
     // 			  getVecY(data),
     // 			  getCompatibilityMtx(data),
     // 			  getSize(data) );
     //
     // printf("%d %d\n", res.first, res.second );
     //
-    // res = alg2	( getVecX(data),
+    // res = Alg2	( getVecX(data),
 	// 			  getVecY(data),
 	// 			  getCompatibilityMtx(data),
 	// 			  getSize(data) );
@@ -173,11 +199,18 @@ int main() {
     // 				    getVecY(data),
     // 				    getCompatibilityMtx(data),
     //                     &mina,
-    //                     &minb );
+    //                     &minb,
+    //                     h, stack, hash );
     //
     // printf("%d %d\n", mina, minb);
     //
     // destroy_data(data);
+    //
+    // for ( int i = 0; i < MAXN; i++ ) {
+    //     free(hash[i]);
+    // }
+    //
+    // free(hash);
 
     return 0;
 }

@@ -1,4 +1,4 @@
-// #include "../include/CompatFunction.h"
+#include "../include/CompatFunction.h"
 // #include "../include/Data.h"
 // #include "../include/Heap.h"
 #include "../include/AlgHeapUtils.h"
@@ -131,7 +131,6 @@ void h_extractmin (heap* h) {
 
 //see later MAX may not be enough
 
-
 int AlgHeap( int n, int *vecX, int *vecY, bool **mtx, int* mina, int* minb, heap h, Pair *stack, unsigned int **hash ) {
     Pair p,q;
     unsigned int stsize;
@@ -162,9 +161,74 @@ int AlgHeap( int n, int *vecX, int *vecY, bool **mtx, int* mina, int* minb, heap
             stack[hash[p.aind][p.bind]]=stack[stsize];
             hash[stack[stsize].aind][stack[stsize].bind]=hash[p.aind][p.bind];
 
+            if ( p.aind + 1 < n &&
+                 !( hash[p.aind+1][p.bind] < stsize &&
+                 stack[hash[p.aind+1][p.bind]].aind == p.aind + 1 &&
+                 stack[hash[p.aind+1][p.bind]].bind == p.bind ) ) {
+
+                q.aind=p.aind+1;
+                q.bind=p.bind;
+                q.sum=vecX[q.aind]+vecY[q.bind];
+                h_insert(&h, q);
+                stack[stsize].aind=q.aind;
+                stack[stsize].bind=q.bind;
+                hash[q.aind][q.bind]=stsize;
+                stsize++;
+            }
+
+            if ( p.bind + 1 < n &&
+                 !(hash[p.aind][p.bind+1] < stsize &&
+                 stack[hash[p.aind][p.bind+1]].aind == p.aind &&
+                 stack[hash[p.aind][p.bind+1]].bind == p.bind + 1 ) ) {
+
+                q.aind=p.aind;
+                q.bind=p.bind+1;
+                q.sum=vecX[q.aind]+vecY[q.bind];
+                h_insert(&h, q);
+                stack[stsize].aind=q.aind;
+                stack[stsize].bind=q.bind;
+                hash[q.aind][q.bind]=stsize;
+                stsize++;
+            }
+        }
+    }
+    if (found) return p.sum; else return -1;
+}
+
+int AlgHeap_Prob( int n, int *vecX, int *vecY, const int PROB, heap h, Pair *stack, unsigned int **hash ) {
+    Pair p,q;
+    unsigned int stsize;
+    p.sum = vecX[0] + vecY[0];
+    p.aind = 0;
+    p.bind = 0;
+    h.size=0;
+    h_insert(&h, p);
+    stack[0].aind=0;
+    stack[0].bind=0;
+    stsize=1;
+    hash[0][0]=0;
+    int found=0;
+    while (h.size>0 && !found) {
+        //    for (int i=0;i<h.size;i++) printf("|(%d %d) %d| ",h.data[i].aind, h.data[i].bind, h.data[i].sum);
+        //    printf("\n");
+        p=h.data[0];
+        //    printf("par %d %d = %d\n",h.data[0].aind,h.data[0].bind,h.data[0].sum);
+        if ( f_prob(PROB) ) {
+            // *mina=p.aind;
+            // *minb=p.bind;
+            found=1;
+        } else {
+            h_extractmin(&h);
+            //      for (int i=0;i<h.size;i++) printf("|(%d %d) %d| ",h.data[i].aind, h.data[i].bind, h.data[i].sum);
+            //      printf("\n");
+            stsize--;
+            stack[hash[p.aind][p.bind]]=stack[stsize];
+            hash[stack[stsize].aind][stack[stsize].bind]=hash[p.aind][p.bind];
+
             if (p.aind+1<n && !(hash[p.aind+1][p.bind] < stsize &&
-            stack[hash[p.aind+1][p.bind]].aind == p.aind+1 &&
-            stack[hash[p.aind+1][p.bind]].bind == p.bind)) {
+                stack[hash[p.aind+1][p.bind]].aind == p.aind+1 &&
+                stack[hash[p.aind+1][p.bind]].bind == p.bind)) {
+
                 q.aind=p.aind+1;
                 q.bind=p.bind;
                 q.sum=vecX[q.aind]+vecY[q.bind];
@@ -176,8 +240,9 @@ int AlgHeap( int n, int *vecX, int *vecY, bool **mtx, int* mina, int* minb, heap
             }
 
             if (p.bind+1<n && !(hash[p.aind][p.bind+1] < stsize &&
-            stack[hash[p.aind][p.bind+1]].aind == p.aind &&
-            stack[hash[p.aind][p.bind+1]].bind == p.bind+1)) {
+                stack[hash[p.aind][p.bind+1]].aind == p.aind &&
+                stack[hash[p.aind][p.bind+1]].bind == p.bind+1)) {
+
                 q.aind=p.aind;
                 q.bind=p.bind+1;
                 q.sum=vecX[q.aind]+vecY[q.bind];
