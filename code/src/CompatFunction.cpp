@@ -7,15 +7,7 @@ bool f( bool** resultMtx, int ln, int col ) {
 }
 
 bool f_prob( const int PROB ) {
-
-	int randn = rand();
-
-	if ( ( randn % PROB ) == 1 ) {
-		std::cout << randn << " kkk" << std::endl;
-		return true;
-	}
-
-	return false;
+	return ( rand() % PROB ) == 1;
 }
 
 // bool f_prob( const int PROB ) {

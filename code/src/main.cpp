@@ -11,6 +11,10 @@
 #include "../include/AlgHeapUtils.h"
 #include "../include/AlgHeap.h"
 
+#define QUOTE '"'
+
+#define SEED 43
+
 const string DATA_PATH = "./data/";
 const string INST_PATH = "./instances/";
 
@@ -20,7 +24,7 @@ double getElapsedTime( clock_t start, clock_t end ) {
     return (double) (end-start)*1000/CLOCKS_PER_SEC;
 }
 
-void run_all( int MAXPROB, int MINPROB, int MAXN, int REP ) {
+void run_all( int max_prob, int min_prob, int MAXN, int rep, const int seed ) {
     unsigned int **hash;
     Pair stack[2*MAXN];
     heap h;
@@ -43,21 +47,21 @@ void run_all( int MAXPROB, int MINPROB, int MAXN, int REP ) {
 
     string  inst_fpath;
 
-    fp_stats_diagonal.open( DATA_PATH + "all/diagonal.csv", std::ofstream::out | std::ofstream::app );
-    fp_stats_contourl.open( DATA_PATH + "all/contourl.csv", std::ofstream::out | std::ofstream::app );
-    fp_stats_atrivial.open( DATA_PATH + "all/atrivial.csv", std::ofstream::out | std::ofstream::app );
-    fp_stats_trivial .open( DATA_PATH + "all/trivial.csv" , std::ofstream::out | std::ofstream::app );
-    fp_stats_heap    .open( DATA_PATH + "all/heap.csv"    , std::ofstream::out | std::ofstream::app );
+    fp_stats_diagonal.open( DATA_PATH + "all/1000_rep/seed_" +to_string(seed) + "/diagonal.csv", std::ofstream::out | std::ofstream::app );
+    fp_stats_contourl.open( DATA_PATH + "all/1000_rep/seed_" +to_string(seed) + "/contourl.csv", std::ofstream::out | std::ofstream::app );
+    fp_stats_atrivial.open( DATA_PATH + "all/1000_rep/seed_" +to_string(seed) + "/atrivial.csv", std::ofstream::out | std::ofstream::app );
+    fp_stats_trivial .open( DATA_PATH + "all/1000_rep/seed_" +to_string(seed) + "/trivial.csv" , std::ofstream::out | std::ofstream::app );
+    fp_stats_heap    .open( DATA_PATH + "all/1000_rep/seed_" +to_string(seed) + "/heap.csv"    , std::ofstream::out | std::ofstream::app );
 
-    for ( prob = MAXPROB; prob <= MINPROB; prob *= 10 ) {
+    for ( prob = max_prob; prob <= min_prob; prob *= 10 ) {
 
         cout << endl << "# Probabilidade = " << (double)1/prob << "%" << endl;
 
-        fp_stats_diagonal << (double) 1/prob;
-        fp_stats_contourl << (double) 1/prob;
-        fp_stats_atrivial << (double) 1/prob;
-        fp_stats_trivial  << (double) 1/prob;
-        fp_stats_heap     << (double) 1/prob;
+        fp_stats_diagonal << QUOTE << (double) 1/prob << QUOTE;
+        fp_stats_contourl << QUOTE << (double) 1/prob << QUOTE;
+        fp_stats_atrivial << QUOTE << (double) 1/prob << QUOTE;
+        fp_stats_trivial  << QUOTE << (double) 1/prob << QUOTE;
+        fp_stats_heap     << QUOTE << (double) 1/prob << QUOTE;
 
         for ( n = 10; n <= MAXN; n *= 10 ) {
             cout << "\t> n = " << n << endl;
@@ -67,69 +71,64 @@ void run_all( int MAXPROB, int MINPROB, int MAXN, int REP ) {
             Data data = new_data( inst_fpath, PROB_MOD );
 
             cout << "\t>> Trivial\t\t";
-            srand(1);
+            srand(SEED);
             start = clock();
-            for ( r = 0; r < REP; r++ ) {
-                cout << ".";
+            for ( r = 0; r < rep; r++ ) {
                 TrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
-            cout << endl;
+            cout << "Done" << endl;
 
-            exec_time = getElapsedTime( start, end ) / REP;
-            fp_stats_trivial << "," << exec_time;
+            exec_time = getElapsedTime( start, end ) / rep;
+            fp_stats_trivial << "," << QUOTE << exec_time << QUOTE;
 
             cout << "\t>> Quase Trivial\t";
-            srand(1);
+            srand(SEED);
             start = clock();
-            for ( r = 0; r < REP; r++ ) {
-                cout << ".";
+            for ( r = 0; r < rep; r++ ) {
                 AlmostTrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
-            cout << endl;
+            cout << "Done" << endl;
 
-            exec_time = getElapsedTime( start, end ) / REP;
-            fp_stats_atrivial << "," << exec_time;
+            exec_time = getElapsedTime( start, end ) / rep;
+            fp_stats_atrivial << "," << QUOTE << exec_time << QUOTE;
 
             cout << "\t>> Diagonal\t\t";
-            srand(1);
+            srand(SEED);
             start = clock();
-            for ( r = 0; r < REP; r++ ) {
-                cout << ".";
+            for ( r = 0; r < rep; r++ ) {
                 Alg1_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
-            cout << endl;
+            cout << "Done" << endl;
 
-            exec_time = getElapsedTime( start, end ) / REP;
-            fp_stats_diagonal << "," << exec_time;
+            exec_time = getElapsedTime( start, end ) / rep;
+            fp_stats_diagonal << "," << QUOTE << exec_time << QUOTE;
 
             cout << "\t>> Contourline\t\t";
-            srand(1);
+            srand(SEED);
             start = clock();
-            for ( r = 0; r < REP; r++ ) {
-                cout << ".";
+            for ( r = 0; r < rep; r++ ) {
                 Alg2_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
-            cout << endl;
+            cout << "Done" << endl;
 
-            exec_time = getElapsedTime( start, end ) / REP;
-            fp_stats_contourl << "," << exec_time;
+            exec_time = getElapsedTime( start, end ) / rep;
+            fp_stats_contourl << "," << QUOTE << exec_time << QUOTE;
 
             cout << "\t>> Heap\t\t\t";
-            srand(1);
+            srand(SEED);
             start = clock();
-            for ( r = 0; r < REP; r++ ) {
-                cout << ".";
+            for ( r = 0; r < rep; r++ ) {
                 AlgHeap_Prob( getSize(data), getVecX(data), getVecY(data), prob, h, stack, hash );
             }
             end = clock();
-            cout << endl;
+            cout << "Done" << endl;
 
-            exec_time = getElapsedTime( start, end ) / REP;
-            fp_stats_heap << "," << exec_time;
+            exec_time = getElapsedTime( start, end ) / rep;
+            fp_stats_heap << "," << QUOTE << exec_time << QUOTE;
 
             destroy_data( data );
 
@@ -156,7 +155,7 @@ void run_all( int MAXPROB, int MINPROB, int MAXN, int REP ) {
     free(hash);
 }
 
-void run_triv_vs_atriv( int MAXPROB, int MINPROB, int MAXN, int REP ) {
+void run_triv_vs_atriv( int max_prob, int min_prob, int MAXN, int rep, const int seed ) {
 
     double exec_time;
     int n, r, prob;
@@ -168,17 +167,17 @@ void run_triv_vs_atriv( int MAXPROB, int MINPROB, int MAXN, int REP ) {
 
     string  inst_fpath;
 
-    fp_stats_atrivial.open( DATA_PATH + "triv_vs_atriv/atrivial.csv",
+    fp_stats_atrivial.open( DATA_PATH + "triv_vs_atriv/" + "seed_" + to_string(seed) + "/atrivial.csv",
                             std::ofstream::out | std::ofstream::app );
-    fp_stats_trivial .open( DATA_PATH + "triv_vs_atriv/trivial.csv" ,
+    fp_stats_trivial .open( DATA_PATH + "triv_vs_atriv/" + "seed_" + to_string(seed) + "/trivial.csv" ,
                             std::ofstream::out | std::ofstream::app );
 
-    for ( prob = MAXPROB; prob <= MINPROB; prob *= 10 ) {
+    for ( prob = max_prob; prob <= min_prob; prob *= 10 ) {
 
         cout << endl << "# Probabilidade = " << (double)1/prob << "%" << endl;
 
-        fp_stats_atrivial << (double) 1/prob;
-        fp_stats_trivial  << (double) 1/prob;
+        fp_stats_atrivial << QUOTE << (double) 1/prob << QUOTE;
+        fp_stats_trivial  << QUOTE << (double) 1/prob << QUOTE;
 
         for ( n = 10; n <= MAXN; n *= 10 ) {
 
@@ -189,30 +188,28 @@ void run_triv_vs_atriv( int MAXPROB, int MINPROB, int MAXN, int REP ) {
             Data data = new_data( inst_fpath, PROB_MOD );
 
             cout << "\t>> Trivial\t\t";
-            srand(1);
+            srand(SEED);
             start = clock();
-            for ( r = 0; r < REP; r++ ) {
-                cout << ".";
+            for ( r = 0; r < rep; r++ ) {
                 TrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
-            cout << endl;
+            cout << "Done" << endl;
 
-            exec_time = getElapsedTime( start, end ) / REP;
-            fp_stats_trivial << "," << exec_time;
+            exec_time = getElapsedTime( start, end ) / rep;
+            fp_stats_trivial << "," << QUOTE << exec_time << QUOTE;
 
             cout << "\t>> Quase Trivial\t";
-            srand(1);
+            srand(SEED);
             start = clock();
-            for ( r = 0; r < REP; r++ ) {
-                cout << ".";
+            for ( r = 0; r < rep; r++ ) {
                 AlmostTrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
-            cout << endl;
+            cout << "Done" << endl;
 
-            exec_time = getElapsedTime( start, end ) / REP;
-            fp_stats_atrivial << "," << exec_time;
+            exec_time = getElapsedTime( start, end ) / rep;
+            fp_stats_atrivial << "," << QUOTE << exec_time << QUOTE;
 
             destroy_data( data );
 
@@ -229,17 +226,27 @@ void run_triv_vs_atriv( int MAXPROB, int MINPROB, int MAXN, int REP ) {
 
 int main() {
 
-    int MAXPROB = 10;
-    int MINPROB = 10000;
-    int MAXN    = 10000;
-    int REP     = 1;
+    int max_prob = 10;
+    int min_prob = 10000;
+    int MAXN     = 10000;
+    int rep      = 1000;
 
-    run_all( MAXPROB, MINPROB, MAXN, REP );
+    for ( int seed = 1; seed <= 50; seed++ ) {
+        cout << "SEED " << seed << endl;
+        run_all( max_prob, min_prob, MAXN, rep, seed );
+    }
 
-    MAXPROB = 10000;
-    MINPROB = 10000000;
+    printf("\n\n\n FINISHED ALL ALGORITHMS\n");
 
-    run_triv_vs_atriv( MAXPROB, MINPROB, MAXN, REP );
+    max_prob = 10000;
+    min_prob = 10000000;
+
+    for ( int seed = 1; seed <= 50; seed++ ) {
+        cout << "SEED " << seed << endl;
+        run_triv_vs_atriv( max_prob, min_prob, MAXN, rep, seed );
+    }
+
+    printf("\n\n\n FINISHED TRIV VS ATRIV\n");
 
 	// Data data = new_data( "./instances/15.txt", MTX_MOD );
     //
