@@ -231,22 +231,22 @@ int main() {
     int MAXN     = 10000;
     int rep      = 1000;
 
-    for ( int seed = 1; seed <= 50; seed++ ) {
+    for ( int seed = 1; seed <= 1; seed++ ) {
         cout << "SEED " << seed << endl;
         run_all( max_prob, min_prob, MAXN, rep, seed );
     }
 
     printf("\n\n\n FINISHED ALL ALGORITHMS\n");
 
-    max_prob = 10000;
-    min_prob = 10000000;
+    //max_prob = 10000;
+    //min_prob = 10000000;
 
-    for ( int seed = 1; seed <= 50; seed++ ) {
-        cout << "SEED " << seed << endl;
-        run_triv_vs_atriv( max_prob, min_prob, MAXN, rep, seed );
-    }
+    //for ( int seed = 1; seed <= 50; seed++ ) {
+    //    cout << "SEED " << seed << endl;
+    //    run_triv_vs_atriv( max_prob, min_prob, MAXN, rep, seed );
+    //}
 
-    printf("\n\n\n FINISHED TRIV VS ATRIV\n");
+    //printf("\n\n\n FINISHED TRIV VS ATRIV\n");
 
 	// Data data = new_data( "./instances/15.txt", MTX_MOD );
     //
