@@ -52,7 +52,7 @@ Mkfile.old
 dkms.conf
 
 main
-instances
+instances_bkp/
 Gerador
-data/
+data_bkp/
 .dropbox.attr
