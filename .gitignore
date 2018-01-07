@@ -54,3 +54,5 @@ dkms.conf
 main
 Gerador
 .dropbox.attr
+instances
+data
