@@ -51,8 +51,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-code/main
-code/instances
-code/Gerador
-code/data/
+main
+instances
+Gerador
+data/
 .dropbox.attr
