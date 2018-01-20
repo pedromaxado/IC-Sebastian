@@ -5,14 +5,14 @@
 #include "../include/Data.h"
 
 #define RESOURCES 10
-#define INF numeric_limits<int>::max()
+#define INF numeric_limits<long long int>::max()
 
 using namespace std;
 
-pair<int, int> Alg2( int* vecX, int* vecY, bool** resultMtx, int n ) {
+pair<int, int> Alg2( long long int* vecX, long long int* vecY, bool** resultMtx, int n ) {
 
 	int i = 0, j;
-	int best = INF;
+	long long int best = INF;
 	pair<int,int> best_pair = make_pair(-1,-1);
 	vector<int> contourline(n);
 
@@ -23,7 +23,7 @@ pair<int, int> Alg2( int* vecX, int* vecY, bool** resultMtx, int n ) {
 
 		for ( j = 0; j < n; j++ ) {
 
-			int sum = vecX[j] + vecY[contourline[j]];
+			long long int sum = vecX[j] + vecY[contourline[j]];
 
 			while ( contourline[j] < n && sum <= (vecX[i] + vecY[i]) ) {
 				if ( f(resultMtx, j, contourline[j]) == 1 && sum < best ) {
@@ -41,10 +41,10 @@ pair<int, int> Alg2( int* vecX, int* vecY, bool** resultMtx, int n ) {
 	return best_pair;
 }
 
-pair<int, int> Alg2_Prob( int* vecX, int* vecY, int n, const int PROB ) {
+pair<int, int> Alg2_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
 
 	int i = 0, j;
-	int best = INF;
+	long long int best = INF;
 	pair<int,int> best_pair = make_pair(-1,-1);
 	vector<int> contourline(n);
 
@@ -55,7 +55,7 @@ pair<int, int> Alg2_Prob( int* vecX, int* vecY, int n, const int PROB ) {
 
 		for ( j = 0; j < n; j++ ) {
 
-			int sum = vecX[j] + vecY[contourline[j]];
+			long long int sum = vecX[j] + vecY[contourline[j]];
 
 			while ( contourline[j] < n && sum <= (vecX[i] + vecY[i]) ) {
 				if ( f_prob( PROB ) == 1 && sum < best ) {

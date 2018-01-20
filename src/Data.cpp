@@ -8,8 +8,8 @@ using namespace std;
 
 struct data_t {
 	int 	n;
-	int* 	vecX;
-	int* 	vecY;
+	long long int* 	vecX;
+	long long int* 	vecY;
 	bool** 	compatibilityMtx;
 
 	int mode;
@@ -29,8 +29,8 @@ void readData( Data data, string path ) {
 
 	fp_inst >> data->n;
 
-    data->vecX = ( int* ) malloc( data->n * sizeof(int) );
-    data->vecY = ( int* ) malloc( data->n * sizeof(int) );
+    data->vecX = ( long long int* ) malloc( data->n * sizeof(long long int) );
+    data->vecY = ( long long int* ) malloc( data->n * sizeof(long long int) );
 
     for ( i = 0; i < data->n; i++ )
 		fp_inst >> data->vecX[i];
@@ -89,11 +89,11 @@ int getSize( Data d ) {
 	return d->n;
 }
 
-int* getVecX( Data d ) {
+long long int* getVecX( Data d ) {
 	return d->vecX;
 }
 
-int* getVecY( Data d ) {
+long long int* getVecY( Data d ) {
 	return d->vecY;
 }
 

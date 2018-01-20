@@ -3,23 +3,23 @@
 #include "../include/Alg1.h"
 #include "../include/Data.h"
 
-#define INF numeric_limits<int>::max()
+#define INF numeric_limits<long long int>::max()
 
 using namespace std;
 
-pair<int, int> Alg1( int* vecX, int* vecY, bool** resultMtx, int n ) {
+pair<int, int> Alg1( long long int* vecX, long long int* vecY, bool** resultMtx, int n ) {
 
 	if ( f( resultMtx, 0, 0 ) )
 		return make_pair(0,0);
 
 	int i = 1;
-	int best = INF;
+	long long int best = INF;
 	pair<int, int> best_pair;
 
 	while ( i < n && best > ( vecX[i-1] + vecY[i-1] ) ) {
 
 		pair<int, int> current_pair;
-		int cost_sum;
+		long long int cost_sum;
 
 		for ( int j = i; j < n; j++ ) {
 
@@ -57,19 +57,19 @@ pair<int, int> Alg1( int* vecX, int* vecY, bool** resultMtx, int n ) {
         return make_pair(-1,-1);
 }
 
-pair<int, int> Alg1_Prob( int* vecX, int* vecY, int n, const int PROB ) {
+pair<int, int> Alg1_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
 
 	if ( f_prob( PROB ) )
 		return make_pair(0,0);
 
 	int i = 1;
-	int best = INF;
+	long long int best = INF;
 	pair<int, int> best_pair;
 
 	while ( i < n && best > ( vecX[i-1] + vecY[i-1] ) ) {
 
 		pair<int, int> current_pair;
-		int cost_sum;
+		long long int cost_sum;
 
 		for ( int j = i; j < n; j++ ) {
 

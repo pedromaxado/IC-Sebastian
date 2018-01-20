@@ -16,9 +16,9 @@ void destroy_data( Data d );
 
 int getSize( Data d );
 
-int* getVecX( Data d );
+long long int* getVecX( Data d );
 
-int* getVecY( Data d );
+long long int* getVecY( Data d );
 
 bool** getCompatibilityMtx( Data d );
 

@@ -3,16 +3,17 @@
 #include "../include/AlgT.h"
 #include "../include/Data.h"
 
-#define INF numeric_limits<int>::max()
+#define INF numeric_limits<long long int>::max()
 
 using namespace std;
 
-pair<int, int> TrivialAlg( int* vecX, int* vecY, bool** resultMtx, int n ) {
+pair<int, int> TrivialAlg( long long int* vecX, long long int* vecY, bool** resultMtx, int n ) {
 
 	if ( f( resultMtx, 0, 0 ) )
 		return make_pair(0,0);
 
-	int i, j, best = INF;
+	int i, j;
+	long long int best = INF;
 	pair<int,int> best_pair;
 
 	for ( i = 0; i < n; i++ ) {
@@ -32,12 +33,13 @@ pair<int, int> TrivialAlg( int* vecX, int* vecY, bool** resultMtx, int n ) {
 		return make_pair(-1,-1);
 }
 
-pair<int, int> TrivialAlg_Prob( int* vecX, int* vecY, int n, const int PROB ) {
+pair<int, int> TrivialAlg_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
 
 	if ( f_prob( PROB ) )
 		return make_pair(0,0);
 
-	int i, j, best = INF;
+	int i, j;
+	long long int best = INF;
 	pair<int,int> best_pair;
 
 	for ( i = 0; i < n; i++ ) {

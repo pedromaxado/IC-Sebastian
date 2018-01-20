@@ -4,7 +4,7 @@
 #define MAX 10100
 
 typedef struct {
-    int sum;
+    long long int sum;
     int aind;
     int bind;
 } Pair;

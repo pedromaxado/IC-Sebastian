@@ -131,7 +131,7 @@ void h_extractmin (heap* h) {
 
 //see later MAX may not be enough
 
-int AlgHeap( int n, int *vecX, int *vecY, bool **mtx, int* mina, int* minb, heap h, Pair *stack, unsigned int **hash ) {
+long long int AlgHeap( int n, long long int *vecX, long long int *vecY, bool **mtx, int* mina, int* minb, heap h, Pair *stack, unsigned int **hash ) {
     Pair p,q;
     unsigned int stsize;
     p.sum = vecX[0] + vecY[0];
@@ -195,7 +195,7 @@ int AlgHeap( int n, int *vecX, int *vecY, bool **mtx, int* mina, int* minb, heap
     if (found) return p.sum; else return -1;
 }
 
-int AlgHeap_Prob( int n, int *vecX, int *vecY, const int PROB, heap h, Pair *stack, unsigned int **hash ) {
+long long int AlgHeap_Prob( int n, long long int *vecX, long long int *vecY, const int PROB, heap h, Pair *stack, unsigned int **hash ) {
     Pair p,q;
     unsigned int stsize;
     p.sum = vecX[0] + vecY[0];

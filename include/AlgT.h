@@ -5,8 +5,8 @@
 
 using namespace std;
 
-pair<int, int> TrivialAlg( int* vecX, int* vecY, bool** resultMtx, int n );
+pair<int, int> TrivialAlg( long long int* vecX, long long int* vecY, bool** resultMtx, int n );
 
-pair<int, int> TrivialAlg_Prob( int* vecX, int* vecY, int n, const int PROB );
+pair<int, int> TrivialAlg_Prob( long long int* vecX, long long int* vecY, int n, const int PROB );
 
 #endif
