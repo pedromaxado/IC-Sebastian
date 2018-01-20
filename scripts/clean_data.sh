@@ -1,11 +1,11 @@
 #!/bin/bash
 
-for file in data/all/1000_rep/seed_*/*.csv
+for file in data/bigdif_dist/seed_*/*.csv
 do
     cat /dev/null > $file
 done
 
-for file in data/triv_vs_atriv/seed_*/*.csv
+for file in data/exp_dist/seed_*/*.csv
 do
     cat /dev/null > $file
 done
