@@ -41,7 +41,7 @@ pair<int, int> Alg2( long long int* vecX, long long int* vecY, bool** resultMtx,
 	return best_pair;
 }
 
-pair<int, int> Alg2_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
+pair<int, int> Alg2_Prob( long long int* vecX, long long int* vecY, int n, const int PROB, int a, int b, int c ) {
 
 	int i = 0, j;
 	long long int best = INF;
@@ -58,7 +58,7 @@ pair<int, int> Alg2_Prob( long long int* vecX, long long int* vecY, int n, const
 			long long int sum = vecX[j] + vecY[contourline[j]];
 
 			while ( contourline[j] < n && sum <= (vecX[i] + vecY[i]) ) {
-				if ( f_prob( PROB ) == 1 && sum < best ) {
+				if ( f_prob( PROB, a, b, c, j, contourline[j] ) == 1 && sum < best ) {
 					best = sum;
 					best_pair = make_pair(j, contourline[j]);
 				}

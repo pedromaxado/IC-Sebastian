@@ -35,7 +35,7 @@ pair<int, int> TrivialAlg( long long int* vecX, long long int* vecY, bool** resu
 
 pair<int, int> TrivialAlg_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
 
-	if ( f_prob( PROB ) )
+	if ( f_prob( PROB, a, b, c, 0, 0 ) )
 		return make_pair(0,0);
 
 	int i, j;
@@ -44,7 +44,7 @@ pair<int, int> TrivialAlg_Prob( long long int* vecX, long long int* vecY, int n,
 
 	for ( i = 0; i < n; i++ ) {
 		for ( j = 0; j < n; j++ ) {
-			if ( f_prob( PROB ) ) {
+			if ( f_prob( PROB, a, b, c, i, j ) ) {
 				if ( ( vecX[i] + vecY[j] ) < best ) {
 					best = vecX[i] + vecY[j];
 					best_pair = make_pair(i,j);

@@ -33,9 +33,9 @@ pair<int, int> AlmostTrivialAlg( long long int* vecX, long long int* vecY, bool*
 	return best_pair;
 }
 
-pair<int, int> AlmostTrivialAlg_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
+pair<int, int> AlmostTrivialAlg_Prob( long long int* vecX, long long int* vecY, int n, const int PROB, int a, int b, int c ) {
 
-	if ( f_prob( PROB ) )
+	if ( f_prob( PROB, a, b, c, 0, 0 ) )
 		return make_pair(0,0);
 
 	int ln = 0, col = 0, maxCol = n;
@@ -45,7 +45,8 @@ pair<int, int> AlmostTrivialAlg_Prob( long long int* vecX, long long int* vecY, 
 	while ( ln < n && maxCol > 0 ) {
 
 		for ( col = 0; col < maxCol; col++ ) {
-			if ( f_prob( PROB ) ) {
+			// if ( f_prob( PROB ) ) {
+			if ( f_prob( PROB, a, b, c, ln, col ) ) {
 				// best = vecX[ln] + vecY[col];
 				best_pair = make_pair(ln, col);
 

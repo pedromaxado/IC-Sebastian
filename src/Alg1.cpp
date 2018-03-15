@@ -57,9 +57,9 @@ pair<int, int> Alg1( long long int* vecX, long long int* vecY, bool** resultMtx,
         return make_pair(-1,-1);
 }
 
-pair<int, int> Alg1_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
+pair<int, int> Alg1_Prob( long long int* vecX, long long int* vecY, int n, const int PROB, int a, int b, int c ) {
 
-	if ( f_prob( PROB ) )
+	if ( f_prob( PROB, a, b, c, 0, 0 ) )
 		return make_pair(0,0);
 
 	int i = 1;
@@ -76,7 +76,7 @@ pair<int, int> Alg1_Prob( long long int* vecX, long long int* vecY, int n, const
 			current_pair = make_pair(i-1, j);
 			cost_sum = vecX[i-1] + vecY[j];
 
-			if ( f_prob( PROB ) && cost_sum < best ) {
+			if ( f_prob( PROB, a, b, c, i-1, j ) && cost_sum < best ) {
 				best = cost_sum;
 				best_pair = current_pair;
 			}
@@ -84,7 +84,7 @@ pair<int, int> Alg1_Prob( long long int* vecX, long long int* vecY, int n, const
 			current_pair = make_pair(j, i-1);
 			cost_sum = vecX[j] + vecY[i-1];
 
-			if ( f_prob( PROB ) && cost_sum < best ) {
+			if ( f_prob( PROB, a, b, c, j, i-1 ) && cost_sum < best ) {
 				best = cost_sum;
 				best_pair = current_pair;
 			}
@@ -93,7 +93,7 @@ pair<int, int> Alg1_Prob( long long int* vecX, long long int* vecY, int n, const
 		current_pair = make_pair(i, i);
 		cost_sum = vecX[i] + vecY[i];
 
-		if ( f_prob( PROB ) && cost_sum < best ) {
+		if ( f_prob( PROB, a, b, c, i, i ) && cost_sum < best ) {
 			best = cost_sum;
 			best_pair = current_pair;
 		}

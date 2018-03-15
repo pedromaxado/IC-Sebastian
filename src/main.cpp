@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cmath>
 
 #include "../include/Data.h"
 #include "../include/Heap.h"
@@ -17,6 +18,10 @@
 
 const string DATA_PATH = "./data/exp_dist/simple/";
 const string INST_PATH = "./instances/exp_dist/";
+
+const unsigned int NPRIMES = 1000000;
+
+vector<int> primes;
 
 using namespace std;
 
@@ -202,6 +207,12 @@ void run_all_but_triv( int max_prob, int min_prob, int MAXN, int rep, const int 
             srand(SEED);
             start = clock();
             for ( r = 0; r < rep; r++ ) {
+                int x = rand() % NPRIMES;
+                int a = primes[x];
+                int y = rand() % NPRIMES;
+                int b = primes[y];
+                int z = rand() % NPRIMES;
+                int c = primes[z];
                 AlmostTrivialAlg_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
@@ -214,6 +225,12 @@ void run_all_but_triv( int max_prob, int min_prob, int MAXN, int rep, const int 
             srand(SEED);
             start = clock();
             for ( r = 0; r < rep; r++ ) {
+                int x = rand() % NPRIMES;
+                int a = primes[x];
+                int y = rand() % NPRIMES;
+                int b = primes[y];
+                int z = rand() % NPRIMES;
+                int c = primes[z];
                 Alg1_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
@@ -226,6 +243,12 @@ void run_all_but_triv( int max_prob, int min_prob, int MAXN, int rep, const int 
             srand(SEED);
             start = clock();
             for ( r = 0; r < rep; r++ ) {
+                int x = rand() % NPRIMES;
+                int a = primes[x];
+                int y = rand() % NPRIMES;
+                int b = primes[y];
+                int z = rand() % NPRIMES;
+                int c = primes[z];
                 Alg2_Prob( getVecX(data), getVecY(data), getSize(data), prob );
             }
             end = clock();
@@ -238,6 +261,12 @@ void run_all_but_triv( int max_prob, int min_prob, int MAXN, int rep, const int 
             srand(SEED);
             start = clock();
             for ( r = 0; r < rep; r++ ) {
+                int x = rand() % NPRIMES;
+                int a = primes[x];
+                int y = rand() % NPRIMES;
+                int b = primes[y];
+                int z = rand() % NPRIMES;
+                int c = primes[z];
                 AlgHeap_Prob( getSize(data), getVecX(data), getVecY(data), prob, h, stack, hash );
             }
             end = clock();
@@ -338,6 +367,29 @@ void run_triv_vs_atriv( int max_prob, int min_prob, int MAXN, int rep, const int
     fp_stats_trivial .close();
 }
 
+void sieve( int n, vector<int>& primes ) {
+
+    vector<int> p(n);
+
+    for ( int i = 0; i < n; i++ ) {
+        p[i] = 1;
+    }
+
+    p[0] = p[1] = 0;
+
+    for ( int j = 2; j < sqrt(n); j++ ) {
+        if ( p[j] ) {
+            for ( int k = j*j; k < n; k += j ) {
+                p[k] = 0;
+            }
+        }
+    }
+
+    for ( int a = 0; a < n; a++ )
+        if ( p[a] )
+            primes.push_back(a);
+}
+
 int main() {
 
     int max_prob = 10;
@@ -345,12 +397,21 @@ int main() {
     int MAXN     = 50;
     int rep      = 1;
 
-    for ( int seed = 1; seed <= SEED; seed++ ) {
-        cout << "SEED " << seed << endl;
-        run_all_but_triv( max_prob, min_prob, MAXN, rep, seed );
-    }
+    sieve(NPRIMES, primes);
 
-    printf("\n\n\nFINISHED\n");
+    cout << primes.size() << endl;
+
+    for ( unsigned int k = 0; k < primes.size(); k++ )
+        printf("%d ", primes[k]);
+
+    cout << endl;
+
+    // for ( int seed = 1; seed <= SEED; seed++ ) {
+    //     cout << "SEED " << seed << endl;
+    //     run_all_but_triv( max_prob, min_prob, MAXN, rep, seed );
+    // }
+
+    // printf("\n\n\nFINISHED\n");
 
     //max_prob = 10000;
     //min_prob = 10000000;
