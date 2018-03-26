@@ -33,7 +33,7 @@ pair<int, int> TrivialAlg( long long int* vecX, long long int* vecY, bool** resu
 		return make_pair(-1,-1);
 }
 
-pair<int, int> TrivialAlg_Prob( long long int* vecX, long long int* vecY, int n, const int PROB ) {
+pair<int, int> TrivialAlg_Prob( long long int* vecX, long long int* vecY, int n, const int PROB, int a, int b, int c ) {
 
 	if ( f_prob( PROB, a, b, c, 0, 0 ) )
 		return make_pair(0,0);

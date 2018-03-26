@@ -12,10 +12,10 @@
 
 #include "AlgHeapUtils.h"
 
-long long int AlgHeap( int n, long long int *vecX, long long int *vecY, bool **mtx, int* mina, int* minb, heap h, Pair *stack, unsigned int **hash );
-
-long long int AlgHeap_Prob( int n, long long int *vecX, long long int *vecY, const int PROB, heap h, Pair *stack, unsigned int **hash, int a, int b, int c );
+// long long int AlgHeap( int n, long long int *vecX, long long int *vecY, bool **mtx, int* mina, int* minb, heap h, Pair *stack, unsigned int **hash );
+long long int AlgHeap( int n, long long int *vecX, long long int *vecY, bool **mtx, int* mina, int* minb, heap h );
 
 // long long int AlgHeap_Prob( int n, long long int *vecX, long long int *vecY, const int PROB, int a, int b, int c );
+long long int AlgHeap_Prob( int n, long long int *vecX, long long int *vecY, const int PROB, heap h, int a, int b, int c );
 
 #endif
