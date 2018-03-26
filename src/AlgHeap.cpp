@@ -242,7 +242,7 @@ long long int AlgHeap_Prob( int n, long long int *vecX, long long int *vecY, con
             // hash[stack[stsize].aind][stack[stsize].bind]=hash[p.aind][p.bind];
             visited_pairs.erase(make_pair(p.aind, p.bind));
 
-            if ( visited_pairs.find(make_pair(p.aind+1, p.bind)) != visited_pairs.end() ) {
+            if ( p.aind+1 < n && visited_pairs.find(make_pair(p.aind+1, p.bind)) != visited_pairs.end() ) {
             // if (p.aind+1<n && !(hash[p.aind+1][p.bind] < stsize &&
             //     stack[hash[p.aind+1][p.bind]].aind == p.aind+1 &&
             //     stack[hash[p.aind+1][p.bind]].bind == p.bind)) {
@@ -258,7 +258,7 @@ long long int AlgHeap_Prob( int n, long long int *vecX, long long int *vecY, con
                 // stsize++;
             }
 
-            if ( visited_pairs.find(make_pair(p.aind, p.bind+1)) != visited_pairs.end() ) {
+            if ( p.bind+1 < n && visited_pairs.find(make_pair(p.aind, p.bind+1)) != visited_pairs.end() ) {
             // if (p.bind+1<n && !(hash[p.aind][p.bind+1] < stsize &&
             //     stack[hash[p.aind][p.bind+1]].aind == p.aind &&
             //     stack[hash[p.aind][p.bind+1]].bind == p.bind+1)) {

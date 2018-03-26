@@ -16,11 +16,10 @@
 
 #define SEED 50
 
-const string DATA_PATH = "./data/exp_dist/simple/";
-const string INST_PATH = "./instances/exp_dist/";
+string DATA_PATH;
+string INST_PATH;
 
-const unsigned int NPRIMES = 1000000;
-
+unsigned int NPRIMES;
 vector<int> primes;
 
 using namespace std;
@@ -59,7 +58,7 @@ void run( int max_prob, int min_prob, int MAXN, int rep, const int seed ) {
         fp_stats_atrivial << QUOTE << (double) 1/prob << QUOTE;
         fp_stats_heap     << QUOTE << (double) 1/prob << QUOTE;
 
-        for ( n = 10; n <= MAXN; n += 10 ) {
+        for ( n = 10; n <= MAXN; n *= 10 ) {
             cout << "\t> n = " << n << endl;
 
             inst_fpath = INST_PATH + to_string(n) + ".txt";
@@ -224,7 +223,7 @@ void run( int max_prob, int min_prob, int MAXN, int rep, const int seed ) {
 //     fp_stats_trivial .close();
 // }
 
-void sieve( int n, vector<int>& primes ) {
+int sieve( int n, vector<int>& primes ) {
 
     vector<int> p(n);
 
@@ -245,28 +244,79 @@ void sieve( int n, vector<int>& primes ) {
     for ( int a = 0; a < n; a++ )
         if ( p[a] )
             primes.push_back(a);
+
+    return primes.size();
 }
 
 int main() {
 
     int max_prob = 10;
     int min_prob = 10000;
-    int MAXN     = 100000;
-    int rep      = 30;
+    int MAXN     = 10000;
+    int rep      = 1;
 
-    sieve(NPRIMES, primes);
+    NPRIMES = sieve(1000000, primes);
 
-    cout << primes.size() << endl;
+    // cout << NPRIMES << endl;
 
     // for ( unsigned int k = 0; k < primes.size(); k++ )
     //     printf("%d ", primes[k]);
 
     // cout << endl;
 
+    // Simple(linear) distribution with simple compat function
+    DATA_PATH = "./data/simple_dist/simple/";
+    INST_PATH = "./instances/simple_dist/";
+
     for ( int seed = 1; seed <= SEED; seed++ ) {
         cout << "SEED " << seed << endl;
         run( max_prob, min_prob, MAXN, rep, seed );
     }
+
+    // Big difference(crappy name) distribution with simple compat function
+    DATA_PATH = "./data/bigdif_dist/simple/";
+    INST_PATH = "./instances/bigdif_dist/";
+
+    for ( int seed = 1; seed <= SEED; seed++ ) {
+        cout << "SEED " << seed << endl;
+        run( max_prob, min_prob, MAXN, rep, seed );
+    }
+
+    // "Exponencial" distribution with simple compat function
+    // DATA_PATH = "./data/exp_dist/simple/";
+    // INST_PATH = "./instances/exp_dist/";
+
+    // for ( int seed = 1; seed <= SEED; seed++ ) {
+    //     cout << "SEED " << seed << endl;
+    //     run( max_prob, min_prob, MAXN, rep, seed );
+    // }
+
+    // Simple(linear) distribution with heavy compat function
+    DATA_PATH = "./data/simple_dist/heavy/";
+    INST_PATH = "./instances/simple_dist/";
+
+    for ( int seed = 1; seed <= SEED; seed++ ) {
+        cout << "SEED " << seed << endl;
+        run( max_prob, min_prob, MAXN, rep, seed );
+    }
+
+    // Big difference(crappy name) distribution with heavy compat function
+    DATA_PATH = "./data/bigdif_dist/heavy/";
+    INST_PATH = "./instances/bigdif_dist/";
+
+    for ( int seed = 1; seed <= SEED; seed++ ) {
+        cout << "SEED " << seed << endl;
+        run( max_prob, min_prob, MAXN, rep, seed );
+    }
+
+    // "Exponencial" distribution with heavy compat function
+    // DATA_PATH = "./data/exp_dist/heavy/";
+    // INST_PATH = "./instances/exp_dist/";
+
+    // for ( int seed = 1; seed <= SEED; seed++ ) {
+    //     cout << "SEED " << seed << endl;
+    //     run( max_prob, min_prob, MAXN, rep, seed );
+    // }
 
     printf("\n\nFINISHED\n");
 

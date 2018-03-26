@@ -19,6 +19,15 @@ bool f( bool** resultMtx, int ln, int col ) {
 //    return ( rand() % PROB ) == 1;
 // }
 
+// bool f_prob( const int PROB, int a, int b, int c, int ln, int col ) {
+
+//     for ( int i = 0; i < 100; i++ ) {
+
+//     }
+
+//     return ( ( a*ln + b*col + c ) % PROB ) == 1;
+// }
+
 bool f_prob( const int PROB, int a, int b, int c, int ln, int col ) {
    return ( ( a*ln + b*col + c ) % PROB ) == 1;
 }
