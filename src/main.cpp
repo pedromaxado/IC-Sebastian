@@ -251,9 +251,9 @@ int sieve( int n, vector<int>& primes ) {
 int main() {
 
     int max_prob = 10;
-    int min_prob = 10000;
+    int min_prob = 100000;
     int MAXN     = 100000;
-    int rep      = 1;
+    int rep      = 100;
 
     NPRIMES = sieve(1000000, primes);
 

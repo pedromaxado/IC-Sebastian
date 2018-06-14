@@ -9,7 +9,7 @@ CompilationUnits = $(shell find $(SrcDir) -name '*.cpp')
 Build    = g++
 Standard = c++11
 Warnings = -Wall
-Optimize = -O2
+Optimize = -O0
 
 BuildFlags  = $(Warnings)       \
               -std=$(Standard)  \
